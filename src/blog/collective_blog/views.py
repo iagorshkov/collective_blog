@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Blog, Post, Comment
 from math import ceil
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 page_post_limit = 5.0
 
