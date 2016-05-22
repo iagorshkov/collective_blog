@@ -4,41 +4,19 @@
         <div class="container-fluid">
 	        <div class="row">
 		        <div class="col-md-12">
-			        <form role="form">
-                        <div class="form-group">
-
-					        <label for="exampleInputPassword1">
-						        Выберите логин
-					        </label>
-					        <input class="form-control" id="exampleInputPassword1" type="password" />
-				        </div>
-				        <div class="form-group">
-
-					        <label for="exampleInputEmail1">
-						        Укажите e-mail
-					        </label>
-					        <input class="form-control" id="exampleInputEmail1" type="email" />
-				        </div>
-				        <div class="form-group">
-
-					        <label for="exampleInputPassword1">
-						        Пароль
-					        </label>
-					        <input class="form-control" id="exampleInputPassword1" type="password" />
-				        </div>
-                        <div class="form-group">
-
-					        <label for="exampleInputPassword1">
-						        Повторите пароль
-					        </label>
-					        <input class="form-control" id="exampleInputPassword1" type="password" />
-				        </div>
-				        <button type="submit" class="btn btn-default">
-					        Зарегистрироваться
-				        </button>
-			        </form>
+                    <div align="center" class="post">
+                        <h3>Registration</h3>
+                        <form method="POST" class="post-form">
+                            {% csrf_token %}
+                            <table id="regtable">
+                                {{ RegistrationForm.as_table }}
+                            </table>
+                            <button type="submit" class="save btn btn-default">Save</button>
+                        </form>
+                    </div>
 		        </div>
 	        </div>
         </div>
     </div>
+
 {% endblock content %}

@@ -4,32 +4,35 @@
         <div class="container-fluid">
 	        <div class="row">
 		        <div>
-			        <h2>
+			        <h3 class="text-center">
 				        {{ Post.title }}
-			        </h2>
+			        </h3>
+                    <hr>
                     Дата: <span class="label label-info">{{ Post.published_date }}</span>
                     Блог: <span class="label label-info">Блог: <a href="{% url 'blog_detail' blog_id=Post.blog.name %}">{{ Post.blog.full_name }}</a></span>
-                    Рейтинг: <span class="label label-info">{{ Post.rating }}</span>
+                    <hr>
                    <p>
-				        {{ Post.text }}
+				        {{ Post.text|safe }}
 			        </p>
+                    <hr>
 		        </div>
 	        </div>
         </div>
         <div class="container-fluid">
 	        <div class="row">
 		        <div class="col-md-4">
-                    {% load static %} <img src="{% static 'pics/plus.png' %}" alt="Plus">  
-                    <img src="{% static 'pics/minus.png' %}" alt="Minus">  Рейтинг: <span class="label label-info">{{ Post.rating }}</span>
+                    {% load static %} <button id="post_rating_up" post_id={{ Post.id }} style="width:30px;height:30px;background:url({% static 'pics/plus.png' %}"></button>
+                    {% load static %} <button id="post_rating_down" post_id={{ Post.id }} style="width:30px;height:30px;background:url({% static 'pics/minus.png' %}"></button>
+                    Рейтинг: <span id="rating" class="label label-info">{{ Post.rating }}</span>
+                    <br>
+                    <div id="like_errors">
+                    </div>
 		        </div>
 		        <div class="col-md-2">
 		        </div>
 		        <div class="col-md-2">
                     <table>
                         <tr>
-                            <td>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank"><img src="{% static 'pics/share.png' %}" alt="Share" width="70px" height="24px"></a>
-                            </td>
                             <td>
                                 <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
                                 <script type="text/javascript">
@@ -45,11 +48,21 @@
 		        </div>
 	        </div>
         </div>
+        <hr>
+        <h4>Комментарии</h4>
+        <hr>
+        {% if user.is_authenticated %}
+            <form method="POST" class="post-form">
+                {% csrf_token %}
+                {{ AddCommentForm.as_p }}
+                <button type="submit" class="save btn btn-default">Send</button>
+            </form>
+        {% endif %}
         {% for comment in Comments %}
             <div class="media">
                 <p class="pull-right"><small>{{ comment.published_date }}</small></p>
                 <div class="media-body">
-                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                    <h4 class="media-heading user_name">{{ comment.author }}</h4>
                     {{ comment.text }}
                     <p><small><a href="">+</a> <a href="">-</a></small></p>
                 </div>

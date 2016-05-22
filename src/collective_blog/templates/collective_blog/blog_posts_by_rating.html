@@ -21,7 +21,7 @@
 				Лучшее из блога "{{ Blog.full_name }}"
 			</h3>
 			<div class="row">
-                {% for Blog_Post in Blog_Posts %}:
+                {% for Blog_Post in Blog_Posts %}
                     <div class="post">
 					    <h3 class="text-center">
 						    <a href="{% url 'post_detail' post_id=Blog_Post.pk blog_id=Blog.name%}">{{ Blog_Post.title }}</a>
@@ -32,7 +32,7 @@
 
                         <p class="text_preview">
                             <br>
-						    {{ Blog_Post.text }}
+						    {{ Blog_Post.text|safe }}
                         </p>
 				    </div>
                 {% endfor %}

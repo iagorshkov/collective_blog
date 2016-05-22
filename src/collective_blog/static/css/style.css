@@ -1,5 +1,6 @@
 #posts {
 	border:solid 1px #d6d6d6;
+    border-bottom: none;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright:5px;
     -moz-border-radius-bottomleft:5px;
@@ -47,3 +48,14 @@
 .centered-pills a { float:left; }
 * html .centered-pills ul.nav-pills { display:inline; } /* IE6 */
 *+html .centered-pills ul.nav-pills { display:inline; } /* IE7 */
+
+.media {
+    border-top: 1px solid cadetblue;
+    padding: 0.5% 2%;
+}
+
+.expand {
+    height: 2em;
+    width: 100%;
+    padding: 3px;
+}

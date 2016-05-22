@@ -18,7 +18,7 @@
 {% block content %}
         <div class="col-md-8" id="posts">
 			<div class="row">
-				{% for Post in Page_posts %}:
+				{% for Post in Page_posts %}
                     <div class="post">
 					    <h3 class="text-center">
 						    <a href="{% url 'post_detail' post_id=Post.pk blog_id=Post.blog.name%}">{{ Post.title }}</a>
@@ -28,7 +28,7 @@
                         Рейтинг: <span class="label label-info">{{ Post.rating }}</span>
                         <p class="text_preview">
                             <br>
-						    {{ Post.text }}
+						    {{ Post.text|safe }}
                         </p>
 				    </div>
                 {% endfor %}
