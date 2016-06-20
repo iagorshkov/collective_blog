@@ -1,0 +1,4 @@
+Пункты чек-листа, выполненные на данный момент:
+ - Use friendly URLs (каждый пост имеет адрес blog/*blog_name*/post/*post_number*/)
+ - Favicon
+

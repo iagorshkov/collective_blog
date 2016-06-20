@@ -1,5 +1,8 @@
+
+/.idea/
+/.git/
 *.pyc
+/db.sqlite3
 __pycache__
-myvenv
-db.sqlite3
-.DS_Store
+migrations
+/media/

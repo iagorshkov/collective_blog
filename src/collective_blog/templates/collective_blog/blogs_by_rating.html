@@ -1,0 +1,31 @@
+{% extends 'collective_blog/base.html' %}
+{% block content %}
+    <div class="col-md-8">
+        <h3 class="text-center">
+            Все блоги
+        </h3>
+        {% for Blog in Page_Blogs %}
+            <div class="media">
+                <a href="#" class="pull-left"><img alt="Bootstrap Media Preview" src="http://lorempixel.com/64/64/" class="media-object" /></a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="{% url 'blog_detail' blog_id=Blog.name%}">{{ Blog.full_name }}</a>
+                    </h4> Рейтинг: {{ Blog.rating }} <br> {{ Blog.description }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
+{%  block pages %}
+    <div align="center">
+        <ul class="pagination">
+            {% for c in count_pages %}
+                <li>
+                    <a href="{% url 'blogs_by_rating' page_number=c %}">{{ c }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

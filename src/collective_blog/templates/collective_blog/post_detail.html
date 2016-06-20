@@ -1,0 +1,83 @@
+{% extends 'collective_blog/base.html' %}
+{% block content %}
+    <div class="col-md-8" id="posts">
+        <div class="container-fluid">
+	        <div class="row">
+		        <div>
+			        <h3 class="text-center">
+				        {{ Post.title }}
+			        </h3>
+                    <hr>
+                    Дата: <span class="label label-info">{{ Post.published_date }}</span>
+                    Блог: <span class="label label-info">Блог: <a href="{% url 'blog_detail' blog_id=Post.blog.name %}">{{ Post.blog.full_name }}</a></span>
+                    Автор: <span class="label label-info">{{ Post.author }}</span>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'remove_post' blog_id=Post.blog.name post_id=Post.id %}"><span class="label label-danger">Удалить</span></a>
+                    {% endif %}
+                    <hr>
+                   <p>
+				        {{ Post.text|safe }}
+			        </p>
+                    <hr>
+		        </div>
+	        </div>
+        </div>
+        <div class="container-fluid">
+	        <div class="row">
+		        <div class="col-md-4">
+                    {% load static %} <button id="post_rating_up" post_id={{ Post.id }} style="width:30px;height:30px;background:url({% static 'pics/plus.png' %}"></button>
+                    {% load static %} <button id="post_rating_down" post_id={{ Post.id }} style="width:30px;height:30px;background:url({% static 'pics/minus.png' %}"></button>
+                    Рейтинг: <span id="rating" class="label label-info">{{ Post.rating }}</span>
+                    <br>
+                    <div id="like_errors">
+                    </div>
+		        </div>
+		        <div class="col-md-2">
+		        </div>
+		        <div class="col-md-2">
+                    <table>
+                        <tr>
+                            <td>
+                                <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+                                <script type="text/javascript">
+                                    <!--
+                                    document.write(VK.Share.button());
+                                    -->
+                                </script>
+                            </td>
+                            <td><a href="https://twitter.com/share" class="twitter-share-button" data-lang="ru">Твитнуть</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                            </td>
+                        </tr>
+                    </table>
+		        </div>
+		        <div class="col-md-2">
+		        </div>
+	        </div>
+        </div>
+        <hr>
+        <h4>Комментарии</h4>
+        <hr>
+        {% if user.is_authenticated %}
+            <form method="POST" class="post-form">
+                {% csrf_token %}
+                {{ AddCommentForm.as_p }}
+                <button type="submit" class="save btn btn-default">Send</button>
+            </form>
+        {% endif %}
+        {% for comment in Comments %}
+            <div class="media">
+                <p class="pull-right"><small>{{ comment.published_date }}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'remove_comment' comment_id=comment.id post_id=Post.id blog_id=Post.blog.name %}"><span class="label label-danger">x</span></a>
+                    {% endif %}
+                </small></p>
+                <div class="media-body">
+                    <h4 class="media-heading user_name">{{ comment.author }}</h4>
+                    {{ comment.text }}
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
