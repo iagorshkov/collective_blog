@@ -6,7 +6,6 @@
         </h3>
         {% for Blog in Page_Blogs %}
             <div class="media">
-                <a href="#" class="pull-left"><img alt="Bootstrap Media Preview" src="http://lorempixel.com/64/64/" class="media-object" /></a>
                 <div class="media-body">
                     <h4 class="media-heading">
                         <a href="{% url 'blog_detail' blog_id=Blog.name%}">{{ Blog.full_name }}</a>
