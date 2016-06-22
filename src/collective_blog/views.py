@@ -36,7 +36,7 @@ def register(request):
     else:
         form = RegistrationForm()
 
-    return render(request, 'collective_blog/register.html', {"Blogs":Top_blogs, "Posts":Top_posts, "RegistrationForm":form, "title":'Регистрация'})
+    return render(request, 'collective_blog/register.html', {"Blogs":Top_blogs, "Posts":Top_posts, "RegistrationForm":form, "title":'Registration'})
 
 def login(request):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
@@ -52,7 +52,7 @@ def login(request):
     else:
         form = LoginForm()
 
-    return render(request, 'collective_blog/login.html', {"Blogs":Top_blogs, "Posts":Top_posts, "LoginForm":form, "title":'Войти'})
+    return render(request, 'collective_blog/login.html', {"Blogs":Top_blogs, "Posts":Top_posts, "LoginForm":form, "title":'Login'})
 
 
 def logout(request):
@@ -126,7 +126,7 @@ def add_post(request, blog_id):
     else:
         form = AddPostForm()
 
-    return render(request, 'collective_blog/add_post.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Blog_name":blog[0], "Form":AddPostForm, "title":'Добавить пост'})
+    return render(request, 'collective_blog/add_post.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Blog_name":blog[0], "Form":AddPostForm, "title":'Add Post'})
 
 def remove_post(request, blog_id, post_id):
     if not request.user.is_superuser:
@@ -138,7 +138,7 @@ def remove_post(request, blog_id, post_id):
     count_pages = int(ceil(len(Post.objects.filter(blog__name=blog_id))/page_post_limit))
     Blog_Posts = Post.objects.filter(blog__name=blog_id).order_by('-published_date')[page_post_limit * (int(page_number) - 1):page_post_limit * int(page_number)]
 
-    return render(request, 'collective_blog/blog_detail.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Блог "' + Current_Blog.full_name + '" по дате'})
+    return render(request, 'collective_blog/blog_detail.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Blog "' + Current_Blog.full_name + '" by date'})
 
 def remove_comment(request, comment_id, post_id, blog_id):
     if not request.user.is_superuser:
@@ -176,36 +176,36 @@ def blog_detail(request, blog_id, page_number=1):
     Current_Blog = Blog.objects.get(name=blog_id)
     count_pages = int(ceil(len(Post.objects.filter(blog__name=blog_id))/page_post_limit))
     Blog_Posts = Post.objects.filter(blog__name=blog_id).order_by('-published_date')[page_post_limit * (int(page_number) - 1):page_post_limit * int(page_number)]
-    return render(request, 'collective_blog/blog_detail.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Блог "' + Current_Blog.full_name + '" по дате'})
+    return render(request, 'collective_blog/blog_detail.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Blog "' + Current_Blog.full_name + '" by date'})
 
 def by_date_all_page(request, page_number=1):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
     count_pages = int(ceil(len(Post.objects.all())/page_post_limit))
     page_posts = Post.objects.order_by('-published_date')[page_post_limit * (int(page_number) - 1):page_post_limit * int(page_number)]
-    return render(request, 'collective_blog/by_date_all_page.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Page_posts":page_posts, "count_pages":range(1, count_pages + 1), "title":'Все публикации по дате'})
+    return render(request, 'collective_blog/by_date_all_page.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Page_posts":page_posts, "count_pages":range(1, count_pages + 1), "title":'Posts by date'})
 
 def by_rating_all_page(request, page_number):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
     count_pages = int(ceil(len(Post.objects.all())/page_post_limit))
     page_posts = Post.objects.order_by('-rating')[page_post_limit * (int(page_number) - 1):page_post_limit * int(page_number)]
-    return render(request, 'collective_blog/by_rating_all_page.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Page_posts":page_posts, "count_pages":range(1, count_pages + 1), "title":'Все публикации по рейтингу'})
+    return render(request, 'collective_blog/by_rating_all_page.html', {"Blogs":Top_blogs, "Posts":Top_posts, "Page_posts":page_posts, "count_pages":range(1, count_pages + 1), "title":'Posts by rating'})
 
 def blogs_by_rating(request, page_number):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
     count_pages = int(ceil(len(Blog.objects.all())/10.0))
     page_blogs = Blog.objects.order_by('-rating')[10 * (int(page_number) - 1):10 * int(page_number)]
-    return render(request, 'collective_blog/blogs_by_rating.html', {"Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1, count_pages + 1), "Page_Blogs":page_blogs, "title":'Список блогов'})
+    return render(request, 'collective_blog/blogs_by_rating.html', {"Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1, count_pages + 1), "Page_Blogs":page_blogs, "title":'Blogs list'})
 
 def by_rating_blog_posts(request, blog_id, page_number=1):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
     Current_Blog = Blog.objects.get(name=blog_id)
     count_pages = int(ceil(len(Post.objects.filter(blog__name=blog_id))/page_post_limit))
     Blog_Posts = Post.objects.filter(blog__name=blog_id).order_by('-rating')[page_post_limit * (int(page_number) - 1):page_post_limit * int(page_number)]
-    return render(request, 'collective_blog/blog_posts_by_rating.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Блог "' + Current_Blog.full_name + '" по рейтингу'})
+    return render(request, 'collective_blog/blog_posts_by_rating.html', {"Blog":Current_Blog, "Blog_Posts":Blog_Posts, "Blogs":Top_blogs, "Posts":Top_posts, "count_pages":range(1,count_pages+1), "title":'Blog "' + Current_Blog.full_name + '" by rating'})
 
 def custom_handler404(request):
     Top_blogs, Top_posts = update_Blogs_and_Posts_by_rating()
-    response = render_to_response('collective_blog/404.html', {"Blogs":Top_blogs,"Posts":Top_posts, "title":'Страница не найдена'},
+    response = render_to_response('collective_blog/404.html', {"Blogs":Top_blogs,"Posts":Top_posts, "title":'Page Not Found'},
                                   context_instance=RequestContext(request))
     response.status_code = 404
     return response
